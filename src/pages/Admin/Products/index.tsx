@@ -69,6 +69,24 @@ export const Products = () => {
     }
   };
 
+  const handleToggleBranchStatus = async (id: number, currentStatus: boolean) => {
+    if (!selectedBranchId) {
+      toast.error('Lütfen önce bir şube seçin.');
+      return;
+    }
+
+    try {
+      await api.patch(`/products/${id}/stock`, {
+        branch_id: selectedBranchId,
+        is_active: !currentStatus
+      });
+      toast.success(`Ürün bu şubede ${!currentStatus ? 'aktif' : 'pasif'} yapıldı.`);
+      dispatch(fetchProducts({ branchId: selectedBranchId, page, limit: 10 }));
+    } catch {
+      toast.error('Durum güncellenirken hata oluştu.');
+    }
+  };
+
   const filtered = products.filter(p => {
     const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = categoryFilter === 'ALL' || p.category_id === categoryFilter;
@@ -170,6 +188,7 @@ export const Products = () => {
                   <th className="px-10 py-6 text-[10px] font-black text-gray-400 uppercase tracking-widest">Ürün Bilgisi</th>
                   <th className="px-10 py-6 text-[10px] font-black text-gray-400 uppercase tracking-widest">Kategori</th>
                   <th className="px-10 py-6 text-[10px] font-black text-gray-400 uppercase tracking-widest">Fiyat</th>
+                  <th className="px-10 py-6 text-[10px] font-black text-gray-400 uppercase tracking-widest">Şube Durumu</th>
                   <th className="px-10 py-6 text-[10px] font-black text-gray-400 uppercase tracking-widest">Stok Durumu</th>
                   <th className="px-10 py-6 text-[10px] font-black text-gray-400 uppercase tracking-widest text-right">İşlemler</th>
                 </tr>
@@ -235,6 +254,18 @@ export const Products = () => {
                         </td>
                         <td className="px-10 py-6">
                           <span className="font-black text-gray-900 text-xl tracking-tighter">₺{branchInfo?.price_override || product.base_price}</span>
+                        </td>
+                        <td className="px-10 py-6">
+                          <button
+                            onClick={() => handleToggleBranchStatus(product.id, branchInfo?.is_active ?? false)}
+                            className={`px-4 py-2 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all cursor-pointer ${
+                              branchInfo?.is_active 
+                                ? 'bg-green-500 text-white shadow-lg shadow-green-100' 
+                                : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
+                            }`}
+                          >
+                            {branchInfo?.is_active ? 'Şubede Aktif' : 'Şubede Pasif'}
+                          </button>
                         </td>
                         <td className="px-10 py-6">
                           {editingStockId === product.id ? (
