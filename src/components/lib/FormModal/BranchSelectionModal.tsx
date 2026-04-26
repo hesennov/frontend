@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Clock } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,8 +9,10 @@ import { fetchBranches, selectBranch } from '@/store/slices/branchSlice';
 export const BranchSelectionModal = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { branches, selectedBranchId, isLoading } = useSelector((state: RootState) => state.branch);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     if (branches.length === 0) {
       dispatch(fetchBranches());
     }
@@ -19,12 +22,12 @@ export const BranchSelectionModal = () => {
     dispatch(selectBranch(id));
   };
 
-  // Only show if no branch is selected
-  if (selectedBranchId !== null) return null;
+  // Only show if no branch is selected and component is mounted
+  if (!mounted || selectedBranchId !== null) return null;
 
-  return (
+  return createPortal(
     <AnimatePresence>
-      <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-md p-4">
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-md p-4">
         <motion.div
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -73,6 +76,7 @@ export const BranchSelectionModal = () => {
           )}
         </motion.div>
       </div>
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 };
