@@ -71,7 +71,7 @@ export const Home = () => {
         >
           <source src="/header-1.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex flex-col justify-end p-10 md:p-16">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex flex-col justify-end p-6 pb-6 md:p-16">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -81,17 +81,17 @@ export const Home = () => {
               <Flame className="w-4 h-4 text-white animate-pulse" />
               <span className="text-white text-xs font-black uppercase tracking-widest">Şehrin En İyi Kebabı</span>
             </div>
-            <h1 className="text-white text-6xl md:text-8xl font-black tracking-tight mb-6 leading-[0.9]">
+            <h1 className="text-white text-5xl md:text-8xl font-black tracking-tight mb-4 md:mb-6 leading-[0.9]">
               Gerçek Ateş,<br />Efsane <span className="text-orange-500">Lezzet.</span>
             </h1>
-            <p className="text-gray-300 text-lg md:text-xl font-medium max-w-xl mb-10 leading-relaxed">
+            <p className="text-gray-300 text-base md:text-xl font-medium max-w-xl mb-6 md:mb-10 leading-relaxed">
               Anadolu'nun bereketli topraklarından gelen geleneksel tarifler, usta ellerde hayat buluyor.
             </p>
-            <div className="flex flex-wrap gap-4">
-              <button className="bg-orange-500 hover:bg-orange-600 text-white font-black px-10 py-5 rounded-[2rem] transition-all active:scale-95 shadow-xl shadow-orange-500/40 text-lg cursor-pointer">
+            <div className="flex flex-wrap gap-3 md:gap-4">
+              <button className="bg-orange-500 hover:bg-orange-600 text-white font-black px-6 py-4 md:px-10 md:py-5 rounded-[2rem] transition-all active:scale-95 shadow-xl shadow-orange-500/40 text-base md:text-lg cursor-pointer">
                 Hemen Sipariş Ver
               </button>
-              <button className="bg-white/10 backdrop-blur-md hover:bg-white/20 text-white font-black px-10 py-5 rounded-[2rem] transition-all border border-white/20 text-lg cursor-pointer">
+              <button className="bg-white/10 backdrop-blur-md hover:bg-white/20 text-white font-black px-6 py-4 md:px-10 md:py-5 rounded-[2rem] transition-all border border-white/20 text-base md:text-lg cursor-pointer">
                 Menüyü Keşfet
               </button>
             </div>
