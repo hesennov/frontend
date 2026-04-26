@@ -8,6 +8,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Search, ShoppingCart, Star, Flame, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { api } from '@/services/api';
 
+import { BranchSelectionModal } from '@/components/lib/FormModal/BranchSelectionModal';
+
 interface Category {
   id: number;
   name: string;
@@ -24,7 +26,9 @@ export const Home = () => {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    dispatch(fetchProducts({ branchId: selectedBranchId || 1, page, limit: 12 }));
+    if (selectedBranchId !== null) {
+      dispatch(fetchProducts({ branchId: selectedBranchId, page, limit: 12 }));
+    }
   }, [dispatch, selectedBranchId, page]);
 
   useEffect(() => {
@@ -62,6 +66,7 @@ export const Home = () => {
 
   return (
     <div className="space-y-16 pb-32 pt-10">
+      <BranchSelectionModal />
 
       {/* Premium Hero Section */}
       <section className="relative w-full h-[500px] md:h-[600px] rounded-[3.5rem] overflow-hidden shadow-2xl group">

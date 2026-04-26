@@ -7,6 +7,8 @@ export interface Branch {
   name: string;
   address: string;
   is_active: boolean;
+  working_hours?: string;
+  phone?: string;
 }
 
 interface BranchState {
@@ -51,9 +53,6 @@ const branchSlice = createSlice({
       .addCase(fetchBranches.fulfilled, (state, action) => {
         state.isLoading = false;
         state.branches = action.payload;
-        if (!state.selectedBranchId && action.payload.length > 0) {
-          state.selectedBranchId = action.payload[0].id;
-        }
       })
       .addCase(fetchBranches.rejected, (state) => {
         state.isLoading = false;
